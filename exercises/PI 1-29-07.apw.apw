@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Workspace [
+
+<!-- Common Elements -->
+<!ELEMENT Identifier (#PCDATA)>
+<!ELEMENT Comments (#PCDATA)>
+<!ELEMENT CreationDate (#PCDATA)>
+
+<!-- Workspace Elements-->
+<!ELEMENT Workspace ( Identifier,
+               CreateVersion,
+               PJS_File?,
+               PJS_ConvertDate?,
+               PJS_CreateDate?,
+               Comments?,
+               Project*)>
+
+<!ATTLIST Workspace 
+      CurrentVersion CDATA   #REQUIRED> 
+
+<!ELEMENT CreateVersion     (#PCDATA)>
+
+<!-- Conversion data only: only included for files converted from the old .pjs database -->
+<!ELEMENT PJS_File (#PCDATA)>
+<!ELEMENT PJS_ConvertDate (#PCDATA)>
+<!ELEMENT PJS_CreateDate (#PCDATA)>
+
+<!ELEMENT Project (	Identifier,
+                 Designer?,
+                 DealerID?,
+                 SalesOrder?,
+                 PurchaseOrder?,
+                 Comments?,
+                 System*)>
+
+<!ELEMENT Designer (#PCDATA)>
+<!ELEMENT DealerID (#PCDATA)>
+<!ELEMENT SalesOrder (#PCDATA)>
+<!ELEMENT PurchaseOrder (#PCDATA)>
+
+
+<!ELEMENT System  (  Identifier,
+                 SysID,
+                 TransSerial?,
+                 TransModem?,
+                 TransTCPIP?,
+                 VirtualNetLinxMasterFlag?,
+                 VNMRestoreIPSettings?,
+                 VNMSystemID?,
+                 IsAuthenticationEnabled?,
+                 UserName?,
+                 Password?,
+                 Comments?,
+                 File*)>
+
+<!ATTLIST System
+      IsActive   (true | false)   "false"
+      Platform   (Axcess | Netlinx)   "Axcess"
+      Transport   (Serial | Modem | TCPIP) "Serial">
+
+<!ELEMENT SysID (#PCDATA)>
+<!ELEMENT TransSerial (#PCDATA)>
+<!ELEMENT TransModem (#PCDATA)>
+<!ELEMENT TransTCPIP (#PCDATA)>
+<!ELEMENT VirtualNetLinxMasterFlag (#PCDATA)>
+<!ELEMENT VNMRestoreIPSettings (#PCDATA)>
+<!ELEMENT VNMSystemID (#PCDATA)>
+<!ELEMENT IsAuthenticationEnabled (#PCDATA)>
+<!ELEMENT UserName (#PCDATA)>
+<!ELEMENT Password (#PCDATA)>
+
+
+<!ELEMENT File (   Identifier,
+                 FilePathName,
+                 Comments?,
+                 DeviceMap*,
+                 IRDB*)>
+
+<!ATTLIST File 
+       Type (Source | MasterSrc | Include | Module | AXB | IR | TPD | TP4 | KPD | TKO | AMX_IR_DB | IRN_DB | Other | DUET | TOK | TKN | KPB ) "Other"
+       CompileType (Axcess | Netlinx | None) "None"> 
+
+<!ELEMENT FilePathName	(#PCDATA)>
+                            
+<!ELEMENT DeviceMap (DevName)>
+       <!ATTLIST DeviceMap DevAddr CDATA #REQUIRED>
+
+       <!ELEMENT DevName (#PCDATA)>
+
+<!ELEMENT IRDB    (Property,
+                 DOSName,
+                 UserDBPathName,
+                 Notes)>
+       <!ATTLIST IRDB DBKey CDATA #REQUIRED>
+
+       <!ELEMENT Property (#PCDATA)>
+       <!ELEMENT DOSName (#PCDATA)>
+       <!ELEMENT UserDBPathName (#PCDATA)>
+       <!ELEMENT Notes (#PCDATA)>
+]>
+
+<Workspace CurrentVersion="3.1"><Identifier>PI 1-29-07.apw</Identifier>
+<CreateVersion>3.1</CreateVersion>
+<PJS_File></PJS_File>
+<PJS_ConvertDate></PJS_ConvertDate>
+<PJS_CreateDate></PJS_CreateDate>
+<Comments></Comments>
+<Project><Identifier>Programmer 1</Identifier>
+<Designer></Designer>
+<DealerID></DealerID>
+<SalesOrder></SalesOrder>
+<PurchaseOrder></PurchaseOrder>
+<Comments></Comments>
+<System IsActive="true" Platform="Netlinx" Transport="Serial"><Identifier>Programmer 1</Identifier>
+<SysID>0</SysID>
+<TransSerial>COM1,38400,8,None,1,None</TransSerial>
+<TransModem>COM1,38400,8,None,1,None</TransModem>
+<TransTCPIP>192.168.1.51:1319:1:My NI2000</TransTCPIP>
+<VirtualNetLinxMasterFlag>0</VirtualNetLinxMasterFlag>
+<VNMRestoreIPSettings>0.0.0.0:1319:1</VNMRestoreIPSettings>
+<VNMSystemID>1</VNMSystemID>
+<IsAuthenticationEnabled>0</IsAuthenticationEnabled>
+<UserName></UserName>
+<Password></Password>
+<Comments></Comments>
+<File CompileType="None" Type="AMX_IR_DB"><Identifier>AMX IRN: CyberHome</Identifier>
+<FilePathName>AMX IRN Database::1152|53|28629|3927|13269</FilePathName>
+<Comments></Comments>
+<DeviceMap DevAddr="dvVCR"><DevName>dvVCR</DevName>
+</DeviceMap>
+<IRDB DBKey="1152|53|28629|3927|13269"><Property>CyberHome|Digital Video Disc|300MU|RMC300Z|</Property>
+<DOSName>CyberHome01.IRL</DOSName>
+<UserDBPathName></UserDBPathName>
+<Notes></Notes>
+</IRDB>
+</File>
+<File CompileType="None" Type="TP4"><Identifier>AMX Programmer I Training CV7, Rev2, PK</Identifier>
+<FilePathName>AMX Programmer I Training CV7, Rev2, PK.TP4</FilePathName>
+<Comments></Comments>
+<DeviceMap DevAddr="dvTP"><DevName>dvTP</DevName>
+</DeviceMap>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise 1</Identifier>
+<FilePathName>Exercise 1.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise 2.3</Identifier>
+<FilePathName>Exercise 2.3.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise 3.1</Identifier>
+<FilePathName>Exercise 3.1.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise 3.2</Identifier>
+<FilePathName>Exercise 3.2.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise 4.1</Identifier>
+<FilePathName>Exercise 4.1.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="MasterSrc"><Identifier>Exercise 6.1</Identifier>
+<FilePathName>Exercise 6.1.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>exercise 7.2</Identifier>
+<FilePathName>exercise 7.2.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>exercise 7.3</Identifier>
+<FilePathName>exercise 7.3.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>exercise 7.4</Identifier>
+<FilePathName>exercise 7.4.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise 8.1</Identifier>
+<FilePathName>Exercise 8.1.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise 8.2</Identifier>
+<FilePathName>Exercise 8.2.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise2.2</Identifier>
+<FilePathName>Exercise2.2.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Source"><Identifier>Exercise2</Identifier>
+<FilePathName>Exercise2.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="None" Type="TKO"><Identifier>HP_XP8010_Comm</Identifier>
+<FilePathName>HP_XP8010_Comm.tko</FilePathName>
+<Comments></Comments>
+</File>
+</System>
+</Project>
+</Workspace>
