@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Workspace [
+
+<!-- Common Elements -->
+<!ELEMENT Identifier (#PCDATA)>
+<!ELEMENT Comments (#PCDATA)>
+<!ELEMENT CreationDate (#PCDATA)>
+
+<!-- Workspace Elements-->
+<!ELEMENT Workspace ( Identifier,
+               CreateVersion,
+               PJS_File?,
+               PJS_ConvertDate?,
+               PJS_CreateDate?,
+               Comments?,
+               Project*)>
+
+<!ATTLIST Workspace 
+      CurrentVersion CDATA   #REQUIRED> 
+
+<!ELEMENT CreateVersion     (#PCDATA)>
+
+<!-- Conversion data only: only included for files converted from the old .pjs database -->
+<!ELEMENT PJS_File (#PCDATA)>
+<!ELEMENT PJS_ConvertDate (#PCDATA)>
+<!ELEMENT PJS_CreateDate (#PCDATA)>
+
+<!ELEMENT Project (	Identifier,
+                 Designer?,
+                 DealerID?,
+                 SalesOrder?,
+                 PurchaseOrder?,
+                 Comments?,
+                 System*)>
+
+
+<!ELEMENT Designer (#PCDATA)>
+<!ELEMENT DealerID (#PCDATA)>
+<!ELEMENT SalesOrder (#PCDATA)>
+<!ELEMENT PurchaseOrder (#PCDATA)>
+
+
+<!ELEMENT System  (  Identifier,
+                 SysID,
+                 TransSerial?,
+                 TransModem?,
+                 TransTCPIP?,
+                 VirtualNetLinxMasterFlag?,
+                 VNMRestoreIPSettings?,
+                 VNMSystemID?,
+                 Comments?,
+                 File*)>
+
+<!ATTLIST System
+      IsActive   (true | false)   "false"
+      Platform   (Axcess | Netlinx)   "Axcess"
+      Transport   (Serial | Modem | TCPIP) "Serial">
+
+<!ELEMENT SysID (#PCDATA)>
+<!ELEMENT TransSerial (#PCDATA)>
+<!ELEMENT TransModem (#PCDATA)>
+<!ELEMENT TransTCPIP (#PCDATA)>
+<!ELEMENT VirtualNetLinxMasterFlag (#PCDATA)>
+<!ELEMENT VNMRestoreIPSettings (#PCDATA)>
+<!ELEMENT VNMSystemID (#PCDATA)>
+
+
+<!ELEMENT File (   Identifier,
+                 FilePathName,
+                 Comments?,
+                 DeviceMap*,
+                 IRDB*)>
+
+<!ATTLIST File 
+       Type (Source | MasterSrc | Include | Module | AXB | IR | TPD | TP4 | KPD | TKO | AMX_IR_DB | IRN_DB | Other | NEO) "Other"
+       CompileType (Axcess | Netlinx | None) "None"> 
+
+<!ELEMENT FilePathName	(#PCDATA)>
+                            
+<!ELEMENT DeviceMap (DevName)>
+       <!ATTLIST DeviceMap DevAddr CDATA #REQUIRED>
+
+       <!ELEMENT DevName (#PCDATA)>
+
+<!ELEMENT IRDB    (Property,
+                 DOSName,
+                 UserDBPathName,
+                 Notes)>
+       <!ATTLIST IRDB DBKey CDATA #REQUIRED>
+
+       <!ELEMENT Property (#PCDATA)>
+       <!ELEMENT DOSName (#PCDATA)>
+       <!ELEMENT UserDBPathName (#PCDATA)>
+       <!ELEMENT Notes (#PCDATA)>
+]>
+
+<Workspace CurrentVersion="2.1"><Identifier>AMX University</Identifier>
+<CreateVersion>2.1</CreateVersion>
+<PJS_File></PJS_File>
+<PJS_ConvertDate></PJS_ConvertDate>
+<PJS_CreateDate></PJS_CreateDate>
+<Comments></Comments>
+<Project><Identifier>Final Project</Identifier>
+<Designer></Designer>
+<DealerID></DealerID>
+<SalesOrder></SalesOrder>
+<PurchaseOrder></PurchaseOrder>
+<Comments></Comments>
+<System IsActive="true" Platform="Netlinx" Transport="TCPIP"><Identifier>Programmer I Rack</Identifier>
+<SysID>0</SysID>
+<TransSerial>COM1,38400,8,None,1,None</TransSerial>
+<TransModem>COM1,38400,8,None,1,None</TransModem>
+<TransTCPIP>192.168.150.192:1319:1</TransTCPIP>
+<VirtualNetLinxMasterFlag>0</VirtualNetLinxMasterFlag>
+<VNMRestoreIPSettings>0.0.0.0:1319:1</VNMRestoreIPSettings>
+<VNMSystemID>1</VNMSystemID>
+<Comments></Comments>
+<File CompileType="None" Type="AMX_IR_DB"><Identifier>DVD - Panasonic DVD-A110</Identifier>
+<FilePathName>AMX IRN Database::723|53|8971|2205|6313</FilePathName>
+<Comments>                                                                                                                                                                                                                                                               </Comments>
+<DeviceMap DevAddr="dvDVD"><DevName>dvDVD</DevName>
+</DeviceMap>
+<IRDB DBKey="723|53|8971|2205|6313"><Property>Panasonic|Digital Video Disc|DVDA110|VEQ2011|1</Property>
+<DOSName>Panas061.IRL</DOSName>
+<UserDBPathName></UserDBPathName>
+<Notes></Notes>
+</IRDB>
+</File>
+<File CompileType="Netlinx" Type="MasterSrc"><Identifier>Prog I, Final Project, Rev 0, PK</Identifier>
+<FilePathName>Prog I, Final Project, Rev 0, PK.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="None" Type="IR"><Identifier>VCR - Samsung VR8460</Identifier>
+<FilePathName>Samsung VR8460 VCR.irl</FilePathName>
+<Comments></Comments>
+<DeviceMap DevAddr="dvVCR"><DevName>dvVCR</DevName>
+</DeviceMap>
+</File>
+<File CompileType="None" Type="TP4"><Identifier>Programming I Final Project REV3, PK</Identifier>
+<FilePathName>..\Programming I Final Project REV3, PK.TP4</FilePathName>
+<Comments></Comments>
+<DeviceMap DevAddr="dvTP"><DevName>dvTP</DevName>
+</DeviceMap>
+</File>
+</System>
+</Project>
+</Workspace>

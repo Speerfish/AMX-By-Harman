@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Workspace [
+
+<!-- Common Elements -->
+<!ELEMENT Identifier (#PCDATA)>
+<!ELEMENT Comments (#PCDATA)>
+<!ELEMENT CreationDate (#PCDATA)>
+
+<!-- Workspace Elements-->
+<!ELEMENT Workspace ( Identifier,
+               CreateVersion,
+               PJS_File?,
+               PJS_ConvertDate?,
+               PJS_CreateDate?,
+               Comments?,
+               Project*)>
+
+<!ATTLIST Workspace 
+      CurrentVersion CDATA   #REQUIRED> 
+
+<!ELEMENT CreateVersion     (#PCDATA)>
+
+<!-- Conversion data only: only included for files converted from the old .pjs database -->
+<!ELEMENT PJS_File (#PCDATA)>
+<!ELEMENT PJS_ConvertDate (#PCDATA)>
+<!ELEMENT PJS_CreateDate (#PCDATA)>
+
+<!ELEMENT Project (	Identifier,
+                 Designer?,
+                 DealerID?,
+                 SalesOrder?,
+                 PurchaseOrder?,
+                 Comments?,
+                 System*)>
+
+<!ELEMENT Designer (#PCDATA)>
+<!ELEMENT DealerID (#PCDATA)>
+<!ELEMENT SalesOrder (#PCDATA)>
+<!ELEMENT PurchaseOrder (#PCDATA)>
+
+
+<!ELEMENT System  (  Identifier,
+                 SysID,
+                 TransSerial?,
+                 TransModem?,
+                 TransTCPIP?,
+                 VirtualNetLinxMasterFlag?,
+                 VNMRestoreIPSettings?,
+                 VNMSystemID?,
+                 IsAuthenticationEnabled?,
+                 UserName?,
+                 Password?,
+                 Comments?,
+                 File*)>
+
+<!ATTLIST System
+      IsActive   (true | false)   "false"
+      Platform   (Axcess | Netlinx)   "Axcess"
+      Transport   (Serial | Modem | TCPIP) "Serial">
+
+<!ELEMENT SysID (#PCDATA)>
+<!ELEMENT TransSerial (#PCDATA)>
+<!ELEMENT TransModem (#PCDATA)>
+<!ELEMENT TransTCPIP (#PCDATA)>
+<!ELEMENT VirtualNetLinxMasterFlag (#PCDATA)>
+<!ELEMENT VNMRestoreIPSettings (#PCDATA)>
+<!ELEMENT VNMSystemID (#PCDATA)>
+<!ELEMENT IsAuthenticationEnabled (#PCDATA)>
+<!ELEMENT UserName (#PCDATA)>
+<!ELEMENT Password (#PCDATA)>
+
+
+<!ELEMENT File (   Identifier,
+                 FilePathName,
+                 Comments?,
+                 DeviceMap*,
+                 IRDB*)>
+
+<!ATTLIST File 
+       Type (Source | MasterSrc | Include | Module | AXB | IR | TPD | TP4 | KPD | TKO | AMX_IR_DB | IRN_DB | Other | DUET) "Other"
+       CompileType (Axcess | Netlinx | None) "None"> 
+
+<!ELEMENT FilePathName	(#PCDATA)>
+                            
+<!ELEMENT DeviceMap (DevName)>
+       <!ATTLIST DeviceMap DevAddr CDATA #REQUIRED>
+
+       <!ELEMENT DevName (#PCDATA)>
+
+<!ELEMENT IRDB    (Property,
+                 DOSName,
+                 UserDBPathName,
+                 Notes)>
+       <!ATTLIST IRDB DBKey CDATA #REQUIRED>
+
+       <!ELEMENT Property (#PCDATA)>
+       <!ELEMENT DOSName (#PCDATA)>
+       <!ELEMENT UserDBPathName (#PCDATA)>
+       <!ELEMENT Notes (#PCDATA)>
+]>
+
+<Workspace CurrentVersion="3.0"><Identifier>AMX University</Identifier>
+<CreateVersion>3.0</CreateVersion>
+<PJS_File></PJS_File>
+<PJS_ConvertDate></PJS_ConvertDate>
+<PJS_CreateDate></PJS_CreateDate>
+<Comments></Comments>
+<Project><Identifier>Programmer I</Identifier>
+<Designer></Designer>
+<DealerID></DealerID>
+<SalesOrder></SalesOrder>
+<PurchaseOrder></PurchaseOrder>
+<Comments></Comments>
+<System IsActive="true" Platform="Netlinx" Transport="TCPIP"><Identifier>Instructor Answers on NXI</Identifier>
+<SysID>0</SysID>
+<TransSerial>COM1,38400,8,None,1,None</TransSerial>
+<TransModem>COM1,38400,8,None,1,None</TransModem>
+<TransTCPIP>192.168.150.100:1319:1:STudent 10</TransTCPIP>
+<VirtualNetLinxMasterFlag>0</VirtualNetLinxMasterFlag>
+<VNMRestoreIPSettings>0.0.0.0:1319:1</VNMRestoreIPSettings>
+<VNMSystemID>1</VNMSystemID>
+<IsAuthenticationEnabled>0</IsAuthenticationEnabled>
+<UserName></UserName>
+<Password></Password>
+<Comments></Comments>
+<File CompileType="None" Type="AMX_IR_DB"><Identifier>Sony SVO-1620 VCR</Identifier>
+<FilePathName>AMX IRN Database::868|144|11365|1757|4781</FilePathName>
+<Comments>*USE VTR1 MODE FOR ALL SONY BETA DECKS.
+*USE VTR2 MODE FOR ALL SONY 8MM DECKS.
+*USE VTR3 MODE FOR ALL SONY VHS DECKS.</Comments>
+<DeviceMap DevAddr="dvVCR"><DevName>dvVCR</DevName>
+</DeviceMap>
+<IRDB DBKey="868|144|11365|1757|4781"><Property>Sony|VCR, VHS|SVO1620|RMTV190|1</Property>
+<DOSName>SONY0180.IRL</DOSName>
+<UserDBPathName></UserDBPathName>
+<Notes></Notes>
+</IRDB>
+</File>
+<File CompileType="None" Type="AMX_IR_DB"><Identifier>Sony VPLV-800Q Projector</Identifier>
+<FilePathName>AMX IRN Database::868|158|11472|2023|5431</FilePathName>
+<Comments>12/29/97:  HC has wired IR port on top. HC has 2 hard switches on right side,
+  one switches among LENS, INDEX and SWITCHER; the other switches between
+  MOUSE and MENU. HC also has a button on the under side. This button in all
+  modes verifies with the </Comments>
+<DeviceMap DevAddr="dvProj"><DevName>dvProj</DevName>
+</DeviceMap>
+<IRDB DBKey="868|158|11472|2023|5431"><Property>Sony|Video Projector - LCD|VPLV800Q|RMPJM800|1</Property>
+<DOSName>Sony0273.IRL</DOSName>
+<UserDBPathName></UserDBPathName>
+<Notes></Notes>
+</IRDB>
+</File>
+<File CompileType="None" Type="TP4"><Identifier>AMX Programmer I Training CV7, Rev7, PK</Identifier>
+<FilePathName>AMX Programmer I Training CV7, Rev7, PK.TP4</FilePathName>
+<Comments></Comments>
+<DeviceMap DevAddr="dvTP"><DevName>dvTP</DevName>
+</DeviceMap>
+</File>
+<File CompileType="None" Type="IR"><Identifier>CyberHome DVD-300</Identifier>
+<FilePathName>CyberHome DVD-300.irl</FilePathName>
+<Comments></Comments>
+<DeviceMap DevAddr="dvDVD"><DevName>dvDVD</DevName>
+</DeviceMap>
+</File>
+<File CompileType="Netlinx" Type="Module"><Identifier>Marching_Relays_Comm</Identifier>
+<FilePathName>Marching_Relays_Comm.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Module"><Identifier>Marching_Relays_UI</Identifier>
+<FilePathName>Marching_Relays_UI.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="MasterSrc"><Identifier>Prog I Exercises Cumulative</Identifier>
+<FilePathName>Prog I Exercises Cumulative.axs</FilePathName>
+<Comments></Comments>
+</File>
+</System>
+</Project>
+</Workspace>
