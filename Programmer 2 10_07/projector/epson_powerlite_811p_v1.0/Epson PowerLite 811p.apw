@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Workspace [
+
+<!-- Common Elements -->
+<!ELEMENT Identifier (#PCDATA)>
+<!ELEMENT Comments (#PCDATA)>
+<!ELEMENT CreationDate (#PCDATA)>
+
+<!-- Workspace Elements-->
+<!ELEMENT Workspace ( Identifier,
+               CreateVersion,
+               PJS_File?,
+               PJS_ConvertDate?,
+               PJS_CreateDate?,
+               Comments?,
+               Project*)>
+
+<!ATTLIST Workspace 
+      CurrentVersion CDATA   #REQUIRED> 
+
+<!ELEMENT CreateVersion     (#PCDATA)>
+
+<!-- Conversion data only: only included for files converted from the old .pjs database -->
+<!ELEMENT PJS_File (#PCDATA)>
+<!ELEMENT PJS_ConvertDate (#PCDATA)>
+<!ELEMENT PJS_CreateDate (#PCDATA)>
+
+<!ELEMENT Project (	Identifier,
+                 PJS_Key?,
+                 PJS_Revision?,
+                 Designer?,
+                 DealerID?,
+                 SalesOrder?,
+                 PurchaseOrder?,
+                 Comments?,
+                 System*)>
+
+<!-- Conversion data only: included for files converted from the old .pjs database -->
+<!ELEMENT PJS_Key (#PCDATA)>
+<!ELEMENT PJS_Revision (#PCDATA)>
+
+<!ELEMENT Designer (#PCDATA)>
+<!ELEMENT DealerID (#PCDATA)>
+<!ELEMENT SalesOrder (#PCDATA)>
+<!ELEMENT PurchaseOrder (#PCDATA)>
+
+
+<!ELEMENT System  (  Identifier,
+                 SysID,
+                 TransSerial?,
+                 TransModem?,
+                 TransTCPIP?,
+                 VirtualNetLinxMasterFlag?,
+                 VNMRestoreIPSettings?,
+                 VNMSystemID?,
+                 Comments?,
+                 File*)>
+
+<!ATTLIST System
+      IsActive   (true | false)   "false"
+      Platform   (Axcess | Netlinx)   "Axcess"
+      Transport   (Serial | Modem | TCPIP) "Serial">
+
+<!ELEMENT SysID (#PCDATA)>
+<!ELEMENT TransSerial (#PCDATA)>
+<!ELEMENT TransModem (#PCDATA)>
+<!ELEMENT TransTCPIP (#PCDATA)>
+<!ELEMENT VirtualNetLinxMasterFlag (#PCDATA)>
+<!ELEMENT VNMRestoreIPSettings (#PCDATA)>
+<!ELEMENT VNMSystemID (#PCDATA)>
+
+
+<!ELEMENT File (   Identifier,
+                 FilePathName,
+                 Comments?,
+                 DeviceMap*,
+                 IRDB*)>
+
+<!ATTLIST File 
+       Type (Source | MasterSrc | Include | IR | TPD | KPD | TKO | AMX_IR_DB | IRN_DB | Other) "Other"
+       CompileType (Axcess | Netlinx | None) "None"> 
+
+<!ELEMENT FilePathName	(#PCDATA)>
+                            
+<!ELEMENT DeviceMap (DevName)>
+       <!ATTLIST DeviceMap DevAddr CDATA #REQUIRED>
+
+       <!ELEMENT DevName (#PCDATA)>
+
+<!ELEMENT IRDB    (Property,
+                 DOSName,
+                 UserDBPathName,
+                 Notes)>
+       <!ATTLIST IRDB DBKey CDATA #REQUIRED>
+
+       <!ELEMENT Property (#PCDATA)>
+       <!ELEMENT DOSName (#PCDATA)>
+       <!ELEMENT UserDBPathName (#PCDATA)>
+       <!ELEMENT Notes (#PCDATA)>
+]>
+
+<Workspace CurrentVersion="2.0"><Identifier>Epson PowerLite 811p</Identifier>
+<CreateVersion>2.0</CreateVersion>
+<PJS_File></PJS_File>
+<PJS_ConvertDate></PJS_ConvertDate>
+<PJS_CreateDate></PJS_CreateDate>
+<Comments></Comments>
+<Project><Identifier>Epson PowerLite 811p</Identifier>
+<PJS_Key></PJS_Key>
+<PJS_Revision></PJS_Revision>
+<Designer></Designer>
+<DealerID></DealerID>
+<SalesOrder></SalesOrder>
+<PurchaseOrder></PurchaseOrder>
+<Comments></Comments>
+<System IsActive="true" Platform="Netlinx" Transport="TCPIP"><Identifier>Epson PowerLite 811p</Identifier>
+<SysID>0</SysID>
+<TransSerial>COM1,38400,8,None,1,None</TransSerial>
+<TransModem>COM1,38400,8,None,1,None</TransModem>
+<TransTCPIP>10.0.0.2:1319:1</TransTCPIP>
+<VirtualNetLinxMasterFlag>0</VirtualNetLinxMasterFlag>
+<VNMRestoreIPSettings>0.0.0.0:1319:1</VNMRestoreIPSettings>
+<VNMSystemID>1</VNMSystemID>
+<Comments></Comments>
+<File CompileType="None" Type="Other"><Identifier>Epson PowerLite 811p Interface</Identifier>
+<FilePathName>Epson PowerLite 811p Interface.doc</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="None" Type="TPD"><Identifier>Epson_PowerLite_811p-Platinum</Identifier>
+<FilePathName>Epson_PowerLite_811p-Platinum.tpd</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="None" Type="TKO"><Identifier>Epson_PowerLite_811p_Comm</Identifier>
+<FilePathName>Epson_PowerLite_811p_Comm.tko</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="MasterSrc"><Identifier>Epson_PowerLite_811p_Main</Identifier>
+<FilePathName>Epson_PowerLite_811p_Main.axs</FilePathName>
+<Comments></Comments>
+</File>
+<File CompileType="Netlinx" Type="Module"><Identifier>Epson_PowerLite_811p_UI</Identifier>
+<FilePathName>Epson_PowerLite_811p_UI.axs</FilePathName>
+<Comments></Comments>
+</File>
+</System>
+</Project>
+</Workspace>
