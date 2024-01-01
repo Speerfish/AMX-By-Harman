@@ -1,0 +1,120 @@
+NetLinx Module = AMX_PosiPilot_UI
+
+*****************************************************************************
+  v1.00  09/03/2001 CWR
+    - Original release.
+*****************************************************************************
+
+*****************************************************************************
+Module Parameters:
+*****************************************************************************
+
+DEFINE_MODULE 'AMX_PosiPilot_UI' mdlUI(DEV vdvPILOT, DEV dvPNL, INTEGER chALL_PILOT_BTNS[], DEV dvPT_LIST[])
+
+  **NOTE**
+    - The module is typically defined after DEFINE_START and before DEFINE_EVENT.
+
+
+**************************
+Parameters sent to module:
+**************************
+  - vdvPILOT
+    -- Virtual device defined by caller.
+
+  - dvPNL
+    -- Actual device of touch panel.
+    -- This module will respond to push & release from this panel and provide that
+       functionality to control the PT heads using channel events and send commands
+       that will be executed by the 'AMX_PT_CONTROL' module.
+
+  - chALL_PILOT_BTNS
+    -- Channel codes for touch panel control.
+    -- These channel codes should be indexed like this:
+       INDEX   PosiPilot TYPE     FUNCTION
+       ------------------------------------------------------------------------------------------
+          1       9      BTN/VT   PRESET RECALL
+          2      21      BTN/VT   PRESET STORE
+          3       1      BTN/VT   PRESET 1
+          4       2      BTN/VT   PRESET 2
+          5       3      BTN/VT   PRESET 3
+          6       4      BTN/VT   PRESET 4
+          7       5      BTN/VT   PRESET 5
+          8       6      BTN/VT   PRESET 6
+          9      22      BTN/VT   CAM 1
+         10      23      BTN/VT   CAM 2
+         11      24      BTN/VT   CAM 3
+         12      18      BTN/VT   CAM 4
+         13      19      BTN/VT   CAM 5
+         14      20      BTN/VT   CAM 6
+         15      11      BTN/VT   MORE CAMERAS
+         16      10      BTN      MORE PRESETS
+         17      14      BTN      IRIS AUTO/MANUAL
+         18      35      BTN      SETUP - REVERSE PAN
+         19      36      BTN      SETUP - REVERSE TILT
+         20      37      BTN      SETUP - REVERSE ZOOM
+         21      38      BTN      SETUP - REVERSE FOCUS
+         22      39      BTN      SETUP - REVERSE IRIS
+         23      40      BTN      SETUP - LENS=SPEED
+         24      41      BTN      SETUP - LENS=POSITION
+         25      42      BTN      SETUP - RESET CAMERA
+         26      43      BTN      SETUP - CALIBRATE
+         27      86      BTN      SETUP - CLEAR LIMIT UP
+         28      87      BTN      SETUP - CLEAR LIMIT DOWN
+         29      88      BTN      SETUP - CLEAR LIMIT LEFT
+         30      89      BTN      SETUP - CLEAR LIMIT RIGHT
+         31      81      BTN      SETUP - SET LIMIT UP
+         32      82      BTN      SETUP - SET LIMIT DOWN
+         33      83      BTN      SETUP - SET LIMIT LEFT
+         34      84      BTN      SETUP - SET LIMIT RIGHT
+         35      90      BTN      SETUP - SET/GOTO HOME
+         36      33      BTN/VT   CONFIG - ENTER SETUP
+         37      34      BTN      CONFIG - EXIT  SETUP
+         38      100     FB       INITIALIZATION IN PROGRESS
+
+  - dvPT_LIST[]
+    -- List of AXB-PT10, AXB-PT30, or AXB-CAM devices to be controlled.
+    -- The length of this list cannot exceed 18.
+    -- The length of this list defines the number of cameras to be controlled.
+    -- The position of the device in the list determines it's camera number.
+
+
+
+**************************
+Parameters defined within module:
+**************************
+*** NONE ***
+
+
+*****************************************************************************
+Channels (Set by this module, used on Virtual Pilot):
+*****************************************************************************
+
+Channel   Function (Feedback only)
+---------------------------------
+  1-18        Pilot camera selected
+  221         Pilot Iris Open
+  222         Pilot Iris Close
+  240         Pilot in setup mode
+  241         Pilot is multiplexing cameras (On)
+              Pilot is multiplexing presets (Off)
+
+Channel   Function and Feedback
+---------------------------------
+  249         Pilot debug
+
+
+*****************************************************************************
+Levels:
+*****************************************************************************
+*** NONE ***
+
+
+
+*****************************************************************************
+SEND_COMMANDs:
+*****************************************************************************
+*** NONE ***
+
+
+
+

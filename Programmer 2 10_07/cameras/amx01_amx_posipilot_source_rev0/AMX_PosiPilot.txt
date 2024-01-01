@@ -1,0 +1,123 @@
+Include File = AMX_PosiPilot_CCS
+
+*****************************************************************************
+  v1.00  01/15/2002 CWR
+    - Original release.
+*****************************************************************************
+
+*****************************************************************************
+Referencing this include file:
+*****************************************************************************
+
+  **NOTE**
+    - This include file should be called after the DEFINE_DEVICE section
+      of the main axcess program.  All Pilot devices and PT heads should be
+      defined within the main program, not this include.
+    - This include file is simply an easy way to configure all of the
+      parameters required by the modules.  This way, anything custom with
+      this camera control will be located in this include file, without
+      having to search another main program for these parameter definitions.
+
+
+*****************************************************************************
+Parameters defined within include:
+*****************************************************************************
+
+  - vdv_PILOT_LIST_1[]
+    -- List of virtual Pilots.
+    -- The length of this list cannot exceed 5.
+    -- Used only as a parameter to the AMX_PT_CONTROL module, where multiple
+       pilots simultaneously control the same list of cameras.
+    -- NOTE: You need to populate this DEV array even if there is only a
+             single Pilot to control the list of cameras!
+
+
+  - dvPT_LIST_1[]
+    -- List of AXB-PT10, AXB-PT30, or AXB-CAM devices to be controlled.
+    -- The length of this list cannot exceed 18.
+    -- The length of this list defines the number of cameras to be controlled.
+    -- The position of the device in the list determines it's camera number.
+
+
+  - chALL_PILOT_BTNS
+    -- Channel codes for touch panel control.
+    -- These channel codes should be indexed like this:
+       INDEX   PosiPilot TYPE     FUNCTION
+       ------------------------------------------------------------------------------------------
+          1       9      BTN/VT   PRESET RECALL
+          2      21      BTN/VT   PRESET STORE
+          3       1      BTN/VT   PRESET 1
+          4       2      BTN/VT   PRESET 2
+          5       3      BTN/VT   PRESET 3
+          6       4      BTN/VT   PRESET 4
+          7       5      BTN/VT   PRESET 5
+          8       6      BTN/VT   PRESET 6
+          9      22      BTN/VT   CAM 1
+         10      23      BTN/VT   CAM 2
+         11      24      BTN/VT   CAM 3
+         12      18      BTN/VT   CAM 4
+         13      19      BTN/VT   CAM 5
+         14      20      BTN/VT   CAM 6
+         15      11      BTN/VT   MORE CAMERAS
+         16      10      BTN      MORE PRESETS
+         17      14      BTN      IRIS AUTO/MANUAL
+         18      35      BTN      SETUP - REVERSE PAN
+         19      36      BTN      SETUP - REVERSE TILT
+         20      37      BTN      SETUP - REVERSE ZOOM
+         21      38      BTN      SETUP - REVERSE FOCUS
+         22      39      BTN      SETUP - REVERSE IRIS
+         23      40      BTN      SETUP - LENS=SPEED
+         24      41      BTN      SETUP - LENS=POSITION
+         25      42      BTN      SETUP - RESET CAMERA
+         26      43      BTN      SETUP - CALIBRATE
+         27      86      BTN      SETUP - CLEAR LIMIT UP
+         28      87      BTN      SETUP - CLEAR LIMIT DOWN
+         29      88      BTN      SETUP - CLEAR LIMIT LEFT
+         30      89      BTN      SETUP - CLEAR LIMIT RIGHT
+         31      81      BTN      SETUP - SET LIMIT UP
+         32      82      BTN      SETUP - SET LIMIT DOWN
+         33      83      BTN      SETUP - SET LIMIT LEFT
+         34      84      BTN      SETUP - SET LIMIT RIGHT
+         35      90      BTN      SETUP - SET/GOTO HOME
+         36      33      BTN/VT   CONFIG - ENTER SETUP
+         37      34      BTN      CONFIG - EXIT  SETUP
+         38      100     FB       INITIALIZATION IN PROGRESS
+
+
+*****************************************************************************
+Notes:
+*****************************************************************************
+- This include file is simply the file where the parameters to the modules can
+  be defined.  This way, there is separation between the main NetLinx program
+  and the suite of camera control modules, so that you don't have to search
+  through an entire NetLinx program just to find the definitions of these
+  parameters.
+
+- It is recommended that the main NetLinx program still define the actual
+  DEFINE_DEVICE section for the PosiPilot and the PT heads.
+
+- These suite of modules (UI, PT, JS) default all cameras to:
+    --Positional type lens
+    --Zoom wide  is in the positive direction (+V)
+    --Zoom tele  is in the negative direction (-V)
+    --Focus far  is in the positive direction (+V)
+    --Focus near is in the negative direction (-V)
+    --Iris close is in the positive direction (+V)
+    --Iris open  is in the negative direction (-V)
+
+- To change camera lens parameters use these send_commands to the virtual
+  pilot (see AMX_PT_CONTROL.TXT):
+    --Lens type:       'C<x>LENS-<P or S>'
+    --Pan   direction: 'C<x>G1REV-N'
+    --Tilt  direction: 'C<x>G2REV-N'
+    --Zoom  direction: 'C<x>G3REV-N'
+    --Focus direction: 'C<x>G4REV-N'
+    --Iris  direction: 'C<x>G5REV-N'
+
+- All P/T heads are defaulted as an up-right mount (sitting on a mount as
+  opposed to hanging from the ceiling).
+
+- To change P/T head to hang from the ceiling, use this send_command to
+  the virtual pilot (see AMX_PT_CONTROL.TXT):
+    --Tilt  direction: 'C<x>G2REV-N'
+

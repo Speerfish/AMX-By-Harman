@@ -1,0 +1,229 @@
+NetLinx Module = AMX_PT_CONTROL
+
+*****************************************************************************
+  v1.01  04/14/2003 CWR
+    -ZOOM_TELE,ZOOM_WIDE FB was reversed from level 9.
+    -Added position level commands to sync up other modules to this level.
+       --'CxZOOM POS-y'
+       --'CxFOCUS POS-y'
+       --'CxIRIS POS-y'
+
+  v1.00  09/03/2001 CWR
+    - Original release.
+*****************************************************************************
+
+*****************************************************************************
+Module Parameters:
+*****************************************************************************
+
+DEFINE_MODULE 'AMX_PT_CONTROL' mdlPT(DEV vdvPILOT_LIST[], DEV dvPT_LIST[])
+
+  **NOTE**
+    - The module is typically defined after DEFINE_START and before DEFINE_EVENT.
+    - This module combines functionality provided by 'AMX_CCS_JS' and 'AMX_CCS_UI'
+      to control a list of AMX pan/tilt heads.
+
+
+**************************
+Parameters sent to module:
+**************************
+  - vdvPILOT[]
+    -- List of virtual devices defined by caller.
+    -- The length of this list cannot exceed 5.
+    -- You can mix and match AXP-CCS and AXM-CCS virtual panels.
+
+  - dvPT_LIST[]
+    -- List of AXB-PT10, AXB-PT30, or AXB-CAM devices to be controlled.
+    -- The length of this list cannot exceed 18.
+    -- The length of this list defines the number of cameras to be controlled.
+    -- The position of the device in the list determines it's camera number.
+
+
+**************************
+Parameters defined within module:
+**************************
+  - MAX_PILOT
+    -- Maximum number of pilots to declare, value is 5.
+    -- The length of dvPILOT_LIST[] should not exceed this value!
+    -- NOTE: Currently we only support 5 virtual pilots.
+
+  - MAX_CAMERA
+    -- Maximum number of cameras to declare, value is 18.
+    -- The length of dvPT_LIST[] should not exceed this value!
+    -- NOTE: Currently we only support 18 cameras.  However, we have allocated
+             space to control up to 50 cameras in the future.
+
+
+*****************************************************************************
+Channels (Set by this module, used on each PT device):
+*****************************************************************************
+
+Channel   Function (indicators only)
+---------------------------------
+  60          Camera available (See notes below)
+  61          Camera reverse - pan
+  62          Camera reverse - tilt
+  63          Camera reverse - zoom
+  64          Camera reverse - focus
+  65          Camera reverse - iris
+  66          Camera lens  type (OFF=Positional <default>, ON=Speed)
+  70          Camera lens auto iris mode
+  71          Camera lens iris opening
+  72          Camera lens iris closing
+
+Channel   Function and Feedback
+---------------------------------
+  69          Camera debug (send messaging to terminal)
+
+
+*** Camera available ***
+  - When a P/T head comes online, there is a 25 second delay while it "homes".
+    This delay is referred to as the CALIBRATE DELAY and is re-configurable
+    with a send command (see AMX_CCS_JS.TXT).
+  - After this delay, the P/T head is initialized.  The commands are queued
+    up and each is sent to the P/T head every 100mS.  The commands are:
+    -- Zoom, Focus ramp rates set to 4 seconds.
+       --- 'P3R40','P4R40',P5R40'
+    -- Iris ramp rates set to mid-point.
+       --- 'P3R40','P4R40',P5R128'
+    -- Pan, Tilt, Zoom, Focus speeds set to maximum.
+       --- 'G1S127','G2S127','G3S127','G4S127','G5S127'
+    -- Iris speeds set to mid-point.
+       --- 'G5S64'
+    -- Pan and Tilt "gas" commands set.
+       --- 'G1A5S25','G2A5S25'
+    -- Pan, Tilt, Zoom, Focus deviations set to 0.
+       --- 'G1D0','G2D0','G3D0','G4D0'
+    -- Set pot range for zoom and focus.
+       --- 'AD MODE 3 10','AD MODE 4 10'
+    -- Sets lens mode.
+       --- 'LENS=STANDARD' or 'LENS=SERVO'
+    -- Sets tilt curve.
+       --- 'TILT CURVE=NORMAL' or 'TILT CURVE=INVERT'
+    -- Sets auto iris mode.
+       --- 'IA' or 'IL'
+    -- Sets acceleration mode on.
+       --- 'ACCEL CONTROL=ON'
+    -- At this point, the camera is made available.
+
+
+*****************************************************************************
+Levels:
+*****************************************************************************
+*** NONE ***
+
+*** Notes ***
+    - Refer to the 'AMX_CCS_JS' module for a list of levels that this module
+      will respond to.
+
+
+*****************************************************************************
+SEND_COMMANDs:
+*****************************************************************************
+
+**************************
+Typical commands used:
+**************************
+  'C<x>SP<value>'
+    - Camera store preset.
+    - Where <x> is camera number:
+      -- 1-18 (or MAX_CAMERA)
+    - Where <value> is:
+      -- 1-128 preset number.
+
+
+  'C<x>RP<value>S<y>'
+    - Camera recall preset.
+    - Where <x> is camera number:
+      -- 1-18 (or MAX_CAMERA)
+    - Where <value> is:
+      -- 1-128 preset number.
+    - Where <y> is an optional speed value:
+      -- <y>  is 0-127
+      -- If not specified, defaults to 96 (75%)
+    - NOTE: Iris will not be recalled with presets.
+    - NOTE: In the case of NetLinx generated positional levels for zoom and focus,
+            this module will also recall those preset positional values by updating
+            the actual levels (3 and 4).
+
+
+  'C<x>G<y>REV-<value>'
+    - Camera reverse flags.
+    - Where <x> is camera number:
+      -- 1-18 (or MAX_CAMERA)
+    - Where <y> is camera level number:
+      -- 1 (pan)
+      -- 2 (tilt)
+      -- 3 (zoom)
+      -- 4 (focus)
+      -- 5 (iris)
+    - Where <value> is:
+      -- N for on.
+      -- F for off.
+      -- T for toggle.
+    - This module will provide "reverse" feedback on channels for the 'AMX_CCS_UI' module.
+
+
+  'C<x>LENS-<value>'
+    - Camera lens type configurations.
+    - Where <x> is camera number:
+      -- 1-18 (or MAX_CAMERA)
+    - Where <value> is:
+      -- S for speed mode.
+      -- P for positional mode <default>.
+    - NOTE: With speed mode lenses:
+      -- Zoom  drive is controlled with send_levels.
+      -- Focus drive is controlled with send_levels.
+      -- Iris  drive is controlled with channels (speed is set to max - 127).
+    - NOTE: With positional mode lenses:
+      -- Zoom  drive is controlled with channels and rate commands.
+      -- Focus drive is controlled with channels and rate commands.
+      -- Iris  drive is controlled with channels (ramp rate is set to min - 40).
+    - This module will provide lens mode on channels for the 'AMX_CCS_UI' module.
+
+
+  'C<x>AUTO IRIS-<value>'
+    - Camera lens iris functions.
+    - Where <x> is camera number:
+      -- 1-18 (or MAX_CAMERA)
+    - Where <value> is:
+      -- N for on.
+      -- F for off.
+      -- T for toggle.
+    - NOTE: If this camera is an AXB-CAM, auto iris uses the low current tilt output
+            for auto iris ON ('P2L255T1') and OFF ('P2L0T1').  Otherwise, the 'IA'
+            and 'IL' commands will be used.
+    - This module will provide auto-iris on channels for the 'AMX_CCS_UI' module.
+
+
+  'C<x>IRIS OPEN'
+  'C<x>IRIS CLOSE'
+  'C<x>IRIS STOP'
+    - Where <x> is camera number:
+      -- 1-18 (or MAX_CAMERA)
+    - NOTE: Turns PT iris open/close channels on and off.
+
+
+  'C<x>ZOOM POS-<y>'
+  'C<x>FOCUS POS-<y>'
+  'C<x>IRIS POS-<y>'
+    - Where <x> is camera number:
+      -- 1-18 (or MAX_CAMERA)
+    - Where <y> is the absolute level (0-255).
+    - NOTE: Adds the ability for other modules to "sync" to this
+            absolute positional level.
+
+
+*****************************************************************************
+Notes:
+*****************************************************************************
+- This module will control each signal differently, for optimized operation.
+  These different methods are:
+  -- Zoom  signal in      speed mode (motor), control using send_levels.
+  -- Zoom  signal in positional mode (servo), control using channels and ramp rate commands.
+  -- Focus signal in      speed mode (motor), control using send_levels.
+  -- Focus signal in positional mode (servo), control using channels and ramp rate commands.
+  -- Iris  signal in      speed mode (motor), control using channels (speed is set to midpoint - 64).
+  -- Iris  signal in positional mode (servo), control using channels (ramp rate is set to midpoint - 128).
+
+

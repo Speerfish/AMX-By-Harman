@@ -1,0 +1,169 @@
+NetLinx Module = AMX_Posipilot_JS
+
+*****************************************************************************
+  v1.00  07/20/2001 CWR
+    - Original release.
+*****************************************************************************
+
+*****************************************************************************
+Module Parameters:
+*****************************************************************************
+
+DEFINE_MODULE 'AMX_Posipilot_JS' mdlPILOT(vdvPILOT, dvAI8)
+
+  **NOTE**
+    The module is typically defined after DEFINE_START and before DEFINE_EVENT.
+
+
+**************************
+Parameters sent to module:
+**************************
+  - vdvPILOT
+    -- Virtual device defined by caller.
+    -- This module will scale the actual levels (dvAI8) into 8 bit levels.
+    -- The caller would use the level events on this virtual pilot.
+    -- The caller would send commands to this virtual pilot (see below).
+
+  - dvAI8
+    -- Actual device of AI8 joysticks.
+    -- This module will read the level events from this of device.
+
+
+**************************
+Parameters defined within module:
+**************************
+  - JS_CENTER_TOLERANCE
+    -- Joystick center tolerance, default is 2000.
+
+  - ZOOM_CENTER_TOLERANCE
+    -- Zoom knob center tolerance, default is 500.
+    -- Amount of movement before a level is considered moving.
+
+  - FOCUS_CENTER_TOLERANCE
+    -- Focus wheel center tolerance, default is 500.
+    -- Amount of movement before a level is considered moving.
+
+
+
+*****************************************************************************
+Channels:
+*****************************************************************************
+
+Channel   Function (Feedback only)
+---------------------------------
+  240     Pilot in setup mode
+  241     Pilot multiplexes cameras 1-18
+  250     Pilot is calibrated
+  251     Pan   joystick busy
+  252     Tilt  joystick busy
+  253     Zoom  joystick busy
+  254     Focus joystick busy
+
+
+Channel   Function and Feedback
+---------------------------------
+  249     Pilot debug
+
+
+
+*****************************************************************************
+Levels:
+*****************************************************************************
+
+ Level    Function        Mode        Range   Center  Note
+-----------------------------------------------------------------------------
+  1       Pan             speed     <lo>-<hi>  128    with speed adjustment
+  2       Tilt            speed     <lo>-<hi>  128    with speed adjustment
+  3       Zoom            positional  0-255    n/a
+  4       Focus           positional  0-255    n/a    "Pot" or "Motor" focus wheel
+  5       Iris            positional  0-255    n/a
+  6       P/T speed knob  n/a        <x>-255   n/a    Speed adjustment multiplier (0-100%)
+
+  7       Average pan     speed     <lo>-<hi>  128    with speed adjustment
+  8       Average tilt    speed     <lo>-<hi>  128    with speed adjustment
+  9       Average zoom    speed     <lo>-<hi>  128    with speed adjustment
+ *10      Average focus   speed     <lo>-<hi>  128    *** future ***
+ *11      Average iris    speed     <lo>-<hi>  128    *** future ***
+
+  13      Level of pan    speed       0-255    128    no speed adjustment
+  14      Level of tilt   speed       0-255    128    no speed adjustment
+  15      Level of zoom   speed       0-255    128    no speed adjustment
+ *16      Level of focus  n/a         0-255    n/a    *** future ***
+ *17      Level of iris   n/a         0-255    n/a    *** future ***
+
+  18      Speed of pan    n/a         0-<hi>   n/a
+  19      Speed of tilt   n/a         0-<hi>   n/a
+  20      Speed of zoom   n/a         0-<hi>   n/a
+ *21      Speed of focus  n/a         0-<hi>   n/a    *** future ***
+ *22      Speed of iris   n/a         0-<hi>   n/a    *** future ***
+
+
+*** Notes ***
+  Lvl 1,7 - Pan
+  Lvl 2,8 - Tilt
+    -- <lo> and <hi>, The outer limits of the joystick are adjustable via the
+       speed knob.  The speed knob is simply a percentage of the entire range
+       of the P/T joystick.
+          -- Where the speed setting of 255 would be 100% or 0-255 joystick range.
+          -- Where the speed setting of 128 would be 50% or 64-192 joystick range.
+
+
+  Lvl 4  - Focus (Newer PosiPilot using a Pot OR Older PosiPilot using a motor)
+    -- Early versions of the PosiPilot used a "motor" to read the focus wheel.
+       This was later changed to a "pot" to read the focus wheel.  This module
+       supports both on this level 4.
+    -- When using the newer "pot" style, the AI8 requires the 'DELTA7'
+       send command to get it to work correctly.
+
+
+  Lvl 6 - P/T speed knob
+    -- <x> is a minimum setting for the speed knob.
+    -- 0 to 20 is NOT valid because it would result in no movement.
+
+
+  Lvl 18 - Pan speed
+  Lvl 19 - Tilt speed
+  Lvl 20 - Zoom speed
+    -- Provides a speed that varies when moved off of center.
+          MAX        CENTER       MAX
+          255----------0----------255
+    -- Max is actually the current setting of the speed knob.
+
+
+
+*****************************************************************************
+SEND_COMMANDs:
+*****************************************************************************
+
+**************************
+Typical commands used:
+**************************
+  'REFRESH'
+    - Refresh all level events to caller on virtual pilot.
+
+
+  'CALIBRATE'
+    - Calibrate the posipilot.
+    - Pan, tilt, zoom, and focus center positions are reset to current values.
+
+
+  'P<x>L<value>'
+    - Where <x> is:
+      -- 3 (zoom)
+      -- 4 (focus)
+      -- 5 (iris).
+    - Where <value> is 0-255.
+    - Resets zoom,focus, or iris knob to this new value.  Typically the
+      caller would reset these levels when a new camera is selected.  That
+      way the focus wheel or iris knob would be synchronized for each
+      new camera selected.  This would also be used to synchronize these
+      positional levels after a preset recall.
+
+
+  'FOCUS=MOTOR'
+  'FOCUS=POT'
+    - <DEFAULT> Older posipilots used a MOTOR for the focus wheel.
+    - Newer posipilots use a POT for the focus wheel.
+
+
+
