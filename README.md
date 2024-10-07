@@ -6,4 +6,4 @@ Training Files & NetLinx Coding Examples
 
 ![Untitled 001](https://github.com/user-attachments/assets/29479044-e834-4c94-b9ea-0ea953d0f691)
 
-[Book appointment with Speerfish](https://speerfish-denver.square.site/s/appointments)
+[Book AMX appointment with Speerfish](https://speerfish-denver.square.site/s/appointments)
